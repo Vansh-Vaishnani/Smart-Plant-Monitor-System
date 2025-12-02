@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Plant Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .meter-caption {
+            font-size: 0.9rem;
+            color: #3a5a30;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            font-weight: 600;
+            background: rgba(86, 171, 47, 0.08);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="title-with-icon">
+            <span class="plant-icon" id="plantIcon">🌱</span>
+            <h1>Smart Plant Master Dashboard</h1>
+        </div>
+        <div class="system-status-top" id="systemStatusTop">
+            <div class="status-indicator" id="statusIndicator"></div>
+            <span id="statusText">WAITING...</span>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        
+        <div class="card">
+            <div class="card-title">Temperature Meter</div>
+            <div class="gauge-wrapper">
+                <canvas id="tempGauge"></canvas>
+                <div class="gauge-value" id="tempText">--°C</div>
+            </div>
+            <p class="meter-caption">Optimal: 20°C - 30°C</p>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Humidity Meter</div>
+            <div class="gauge-wrapper">
+                <canvas id="humGauge"></canvas>
+                <div class="gauge-value" id="humText">--%</div>
+            </div>
+            <p class="meter-caption">Optimal: 40% - 70%</p>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Light Intensity</div>
+            <div class="gauge-wrapper">
+                <canvas id="lightGauge"></canvas>
+                <div class="gauge-value" id="lightText">--</div>
+            </div>
+            <p class="meter-caption">Threshold: Must be > 20%</p>
+        </div>
+
+        <div class="card small-card">
+            <div class="card-title">Soil Moisture (1-Hr Avg)</div>
+            <div class="liquid-tank-container">
+                <div class="liquid-fill" id="liquidFill"></div>
+            </div>
+            <div class="tank-label" id="liquidText">0%</div>
+            <p style="font-size:0.75rem; color:#888;">Resets every hour</p>
+        </div>
+
+        <div class="card medium-card">
+            <div class="card-title">Analysis: Temperature vs Humidity</div>
+            <div style="height: 250px;">
+                <canvas id="comboChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card wide-card">
+            <div class="card-title">Soil Trend (Average vs Raw)</div>
+            <div style="height: 200px;">
+                <canvas id="soilTrendChart"></canvas>
+            </div>
+            <p style="font-size:0.8rem; color:#aaa; margin-top:5px;">
+                * Grey Line = Instant Raw Data. Green Line = Moving Average.
+            </p>
+        </div>
+
+
+        <div class="card medium-card" style="grid-column: span 3;">
+            <div class="card-header-row">
+                <div class="card-title" style="margin:0;">Live Sensor Logs</div>
+                <button onclick="downloadCSV()" class="download-btn">Download CSV 📥</button>
+            </div>
+            
+            <div class="table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Temperature</th>
+                            <th>Humidity</th>
+                            <th>Soil (Instant)</th>
+                            <th>Light Level</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
